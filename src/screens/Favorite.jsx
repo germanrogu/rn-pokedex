@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Favorite() {
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Favorite</Text>
     </View>
   );
