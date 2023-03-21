@@ -1,6 +1,7 @@
-import { View, Text, ActivityIndicator, ScrollView } from "react-native";
+import { View, ActivityIndicator, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getPokemons, getPokemonDetailByUrl } from "../api/Pokemon";
+import PokemonList from "../components/PokemonList";
 
 export default function Pokedex() {
   const [data, setData] = useState({
@@ -44,7 +45,7 @@ export default function Pokedex() {
 
   return (
     <ScrollView>
-      <Text>{JSON.stringify(data.data, null, 2)}</Text>
+      <PokemonList />
     </ScrollView>
   );
 }
