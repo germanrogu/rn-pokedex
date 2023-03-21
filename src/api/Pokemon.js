@@ -11,8 +11,21 @@ export const getPokemons = async () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(response.data);
-      }, 2000);
+      }, 1000);
     });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPokemonDetailByUrl = async (url) => {
+  try {
+    const config = {
+      method: "get",
+      url: url,
+    };
+    const response = await axios(config);
+    return response.data;
   } catch (error) {
     throw error;
   }
