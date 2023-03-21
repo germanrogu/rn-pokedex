@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import PokedexScreen from "../screens/Pokedex";
+import PokemonDetailScreen from "../screens/PokemonDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -11,6 +12,11 @@ export default function PokedexNavigaton() {
         name="PokedexStack"
         component={PokedexScreen}
         options={{ title: "Pokedex", headerTitleAlign: "center" }}
+      />
+      <Stack.Screen
+        name="PokemonDetail"
+        component={PokemonDetailScreen}
+        options={{ title: "Detalle", headerTitleAlign: "center" }}
       />
     </Stack.Navigator>
   );
