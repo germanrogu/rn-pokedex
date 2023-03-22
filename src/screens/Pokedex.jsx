@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, ScrollView } from "react-native";
+import { View, ActivityIndicator, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getPokemons, getPokemonDetailByUrl } from "../api/Pokemon";
 import PokemonList from "../components/PokemonList";
@@ -22,9 +22,11 @@ export default function Pokedex() {
             return {
               id: getPokemonsDetails.id,
               name: getPokemonsDetails.name,
-              types: getPokemonsDetails.types[0],
+              type: getPokemonsDetails.types[0].type.name,
               order: getPokemonsDetails.order,
-              image: getPokemonsDetails.sprites.other.home.front_default,
+              image:
+                getPokemonsDetails.sprites.other["official-artwork"]
+                  .front_default,
             };
           })
         );
@@ -36,16 +38,17 @@ export default function Pokedex() {
     })();
   }, []);
 
-  if (data.loading)
+  if (data.loading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
+  }
 
   return (
-    <ScrollView>
-      <PokemonList />
-    </ScrollView>
+    <SafeAreaView>
+      <PokemonList pokemons={data.data} />
+    </SafeAreaView>
   );
 }
