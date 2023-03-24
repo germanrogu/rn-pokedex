@@ -1,8 +1,8 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { getPokemonByColorType } from "../utils/getColorByPokemonType";
 
-export default function PokemonCard({ pokemon }) {
+const PokemonCard = ({ pokemon }) => {
   const goToPokemon = () => {
     console.log("pokemon send ", pokemon);
   };
@@ -27,7 +27,9 @@ export default function PokemonCard({ pokemon }) {
       </View>
     </TouchableOpacity>
   );
-}
+};
+
+export default memo(PokemonCard);
 
 const styles = StyleSheet.create({
   card: {

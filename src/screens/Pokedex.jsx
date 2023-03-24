@@ -4,41 +4,50 @@ import { getPokemons, getPokemonDetailByUrl } from "../api/Pokemon";
 import PokemonList from "../components/PokemonList";
 
 export default function Pokedex() {
-  const [data, setData] = useState({
+  const [{ loading, error }, setState] = useState({
     loading: false,
-    data: {},
     error: null,
   });
+  const [nextUrl, setNextUrl] = useState(null);
+  const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
     (async () => {
-      try {
-        setData({ loading: true, error: null });
-        const { results } = await getPokemons();
-
-        const pokemonDetailResults = await Promise.all(
-          results.map(async (pokemon) => {
-            const getPokemonsDetails = await getPokemonDetailByUrl(pokemon.url);
-            return {
-              id: getPokemonsDetails.id,
-              name: getPokemonsDetails.name,
-              type: getPokemonsDetails.types[0].type.name,
-              order: getPokemonsDetails.order,
-              image:
-                getPokemonsDetails.sprites.other["official-artwork"]
-                  .front_default,
-            };
-          })
-        );
-        setData({ loading: false, data: pokemonDetailResults });
-      } catch (error) {
-        console.error(error);
-        setData({ loading: false, error });
-      }
+      await loadPokemons();
     })();
   }, []);
 
-  if (data.loading) {
+  const loadPokemons = async () => {
+    try {
+      setState({ loading: true, error: null });
+      const { results, next } = await getPokemons(nextUrl);
+      setNextUrl(next);
+
+      const pokemonDetailResults = await Promise.all(
+        results.map(async (pokemon) => {
+          const getPokemonsDetails = await getPokemonDetailByUrl(pokemon.url);
+          return {
+            id: getPokemonsDetails.id,
+            name: getPokemonsDetails.name,
+            type: getPokemonsDetails.types[0].type.name,
+            order: getPokemonsDetails.order,
+            image:
+              getPokemonsDetails.sprites.other["official-artwork"]
+                .front_default,
+          };
+        })
+      );
+      setPokemons([...pokemons, ...pokemonDetailResults]);
+      setState({
+        loading: false,
+      });
+    } catch (error) {
+      console.error(error);
+      setState({ loading: false, error });
+    }
+  };
+
+  if (loading && nextUrl === null) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -48,7 +57,12 @@ export default function Pokedex() {
 
   return (
     <SafeAreaView>
-      <PokemonList pokemons={data.data} />
+      <PokemonList
+        pokemons={pokemons}
+        loadPokemons={loadPokemons}
+        isLoading={loading}
+        isNext={nextUrl}
+      />
     </SafeAreaView>
   );
 }

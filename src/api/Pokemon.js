@@ -1,18 +1,17 @@
 import { API_URL } from "@env";
 import axios from "axios";
 
-export const getPokemons = async () => {
+export const getPokemons = async (nextUrl) => {
   try {
-    const config = {
-      method: "get",
-      url: `${API_URL}/pokemon?limit=20&offset=0`,
-    };
-    const response = await axios(config);
+    const response = await axios.get(
+      nextUrl || `${API_URL}/pokemon?limit=20&offset=0`
+    );
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(response.data);
-      }, 1000);
+      }, 500);
     });
+    // return response.data;
   } catch (error) {
     throw error;
   }
