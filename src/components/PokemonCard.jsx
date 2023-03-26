@@ -20,11 +20,13 @@ const PokemonCard = ({ pokemon }) => {
       onPress={goToPokemon}
       pressDuration={0.05}
     >
-      <View>
-        <Text style={styles.order}>#{`${pokemon.order}`.padStart(3, 0)}</Text>
-        <Text style={styles.name}>
-          {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
-        </Text>
+      <View style={styles.all}>
+        <View style={styles.title}>
+          <Text style={styles.name}>
+            {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+          </Text>
+          <Text style={styles.id}>#{`${pokemon.id}`.padStart(3, 0)}</Text>
+        </View>
         <Image source={{ uri: pokemon.image }} style={styles.image} />
       </View>
     </TouchableOpacity>
@@ -37,25 +39,35 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     width: 100,
-    height: 100,
+    height: 90,
     margin: 8,
     borderRadius: 10,
-    marginBottom: 15,
+    marginBottom: 10,
+  },
+  all: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "100%",
+  },
+  title: {
+    flexDirection: "column",
+    marginLeft: 10,
   },
   image: {
-    width: 80,
-    height: 80,
+    marginRight: 5,
+    width: 75,
+    height: 75,
+    resizeMode: "contain",
   },
   name: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 15,
-    paddingTop: 10,
-    paddingStart: 10,
   },
-  order: {
-    color: "#000",
+  id: {
+    color: "#f5f5f5",
     fontWeight: "bold",
-    fontSize: 10,
+    fontSize: 12,
   },
 });
