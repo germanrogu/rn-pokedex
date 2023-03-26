@@ -1,10 +1,12 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React, { memo } from "react";
 import { getPokemonByColorType } from "../utils/getColorByPokemonType";
+import { useNavigation } from "@react-navigation/native";
 
 const PokemonCard = ({ pokemon }) => {
+  const navigation = useNavigation();
   const goToPokemon = () => {
-    console.log("pokemon send ", pokemon);
+    navigation.navigate("PokemonDetail", { id: pokemon.id });
   };
 
   const bgStyle = {
