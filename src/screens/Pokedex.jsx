@@ -47,16 +47,27 @@ export default function Pokedex() {
     }
   };
 
-  if (loading && nextUrl === null) {
+  if (loading && nextUrl === null && pokemons.length === 0) {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "white",
+        }}
+      >
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{
+        backgroundColor: "white",
+      }}
+    >
       <PokemonList
         pokemons={pokemons}
         loadPokemons={loadPokemons}
