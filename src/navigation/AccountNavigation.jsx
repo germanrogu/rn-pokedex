@@ -13,6 +13,7 @@ export default function AccountNavigation() {
         options={{
           title: "Mi cuenta",
           headerTitleAlign: "center",
+          headerShadowVisible: false,
         }}
       />
     </Stack.Navigator>

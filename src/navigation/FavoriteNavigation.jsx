@@ -13,6 +13,7 @@ export default function FavoriteNavigation() {
         options={{
           title: "Favoritos",
           headerTitleAlign: "center",
+          headerShadowVisible: false,
         }}
       />
     </Stack.Navigator>
